@@ -6,6 +6,7 @@ public class Sorter {
         ArrayList<String> items = new ArrayList<>();
         ArrayList<String> itemMultis = new ArrayList<>();
         ArrayList<String> itemsOut = new ArrayList<>();
+        ArrayList<String> itemsShort = new ArrayList<>();
 
         try (FileReader f = new FileReader("items.txt");
              BufferedReader b = new BufferedReader(f)) {
@@ -25,13 +26,75 @@ public class Sorter {
 
                 lineData[i] = lineData[i].trim();
 
+                String itemShort;
+
+                switch(lineData[i]) {
+                    case "Extend-O-Matic (solo)":
+                        itemShort = "EOM(s)";
+                        break;
+                    case "Extend-O-Matic (class)":
+                        itemShort = "EOM(c)";
+                        break;
+                    case "Point Booster (solo)":
+                        itemShort = "PB(s)";
+                        break;
+                    case "Point Booster (guild)":
+                        itemShort = "PB(g)";
+                        break;
+                    case "Point Booster (class)":
+                        itemShort = "PB(c)";
+                        break;
+                    case "Point Booster (epic)":
+                        itemShort = "PB(e)";
+                        break;
+                    case "Point Booster (epic-class)":
+                        itemShort = "PB(e-c)";
+                        break;
+                    case "Vanish":
+                        itemShort = "V(s)";
+                        break;
+                    case "Vanish (class)":
+                        itemShort = "V(c)";
+                        break;
+                    case "Pack a Punch":
+                    case "Pack a punch":
+                        itemShort = "PaP";
+                        break;
+                    case "The DeLorean":
+                    case "DeLorean":
+                        itemShort = "T DL";
+                        break;
+                    case "Saving Throw":
+                        itemShort = "ST";
+                        break;
+                    case "Liable (solo)":
+                        itemShort = "L(s)";
+                        break;
+                    case "Liable (guild)":
+                        itemShort = "L(g)";
+                        break;
+                    case "3D Print":
+                        itemShort = "3D P";
+                        break;
+                    case "Aux Cord":
+                        itemShort = "AC";
+                        break;
+                    default:
+                        itemShort = lineData[i].trim();
+                }
+
                 while (amount - 1 > 0) {
-                    itemMultis.add(lineData[i]);
+                    itemMultis.add(itemShort);
                     amount--;
                 }
+
+                if (amount <= 5) {
+                    itemsShort.add(itemShort);
+                }
+
             }//end of for loop lineData
 
-            items.addAll(Arrays.asList(lineData));
+            items.addAll(itemsShort);
             items.addAll(itemMultis);
 
             Map<String, Integer> occurs = new HashMap<>();
